@@ -9,16 +9,23 @@ export default class ball{
     this.reset();
   }
 
-  wallCollision(){
+  wallCollision(Player1, Player2){
     const hitLeft = this.x - this.r <= 0                            //redundant remove later after paddle collision
     const hitRight = this.x + this.r >= this.boardWidth
     const hitTop = this.y - this.r <= 0
     const hitBot = this.y + this.r >= this.boardHeight
 
-    if (hitLeft || hitRight){
-      this.vx = -this.vx
+    if (hitLeft){
+      this.goal(Player2);
+      this.vx = -this.vx;
+      console.log(Player1.score, Player2.score)
+
+    } else if(hitRight){
+      this.goal(Player1);
+      console.log(Player1.score, Player2.score)
+
     } else if (hitTop || hitBot){
-      this.vy = -this.vy
+      this.vy = -this.vy;
     }
   }
 
@@ -38,8 +45,8 @@ export default class ball{
     }
   }
 
-  goal(Player1){
-    Player1.score ++;
+  goal(Player){
+    Player.score++;
     this.reset();
   }
 
@@ -47,7 +54,7 @@ export default class ball{
     this.x += this.vx
     this.y += this.vy
 
-    this.wallCollision();
+    this.wallCollision(Player1, Player2);
     this.paddleCollision(Player1, Player2);
 
     //goal(), if right wall add p1 score + else left wall add p2 score
