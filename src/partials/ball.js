@@ -22,11 +22,37 @@ export default class ball{
     }
   }
 
-  render(svg) {
+  paddleCollision(Player1, Player2){
+    if(this.vx > 0){
+      let paddle = Player2.coordinates(Player2.x, Player2.y, Player2.width, Player2.height);
+      let [leftX, rightX, topY, bottomY] = paddle;
+      if(this.x + this.r >= leftX  &&  this.y >= topY  &&  this.y <= bottomY){
+        this.vx = -this.vx;
+       }
+    }else {
+      let paddle = Player1.coordinates(Player1.x, Player1.y, Player1.width, Player1.height);
+      let [leftX, rightX, topY, bottomY] = paddle;
+      if(this.x - this.r <= rightX  &&  this.y >= topY  &&  this.y <= bottomY){
+        this.vx = -this.vx;
+      }
+    }
+  }
+
+  goal(Player1){
+    Player1.score ++;
+    this.reset();
+  }
+
+  render(svg, Player1, Player2) {
     this.x += this.vx
     this.y += this.vy
 
     this.wallCollision();
+    this.paddleCollision(Player1, Player2);
+
+    //goal(), if right wall add p1 score + else left wall add p2 score
+    //change direction of reset when score
+  
     
     let ball = document.createElementNS(SVG_NS, 'circle');
     ball.setAttributeNS(null, 'r', this.r);
