@@ -2,6 +2,7 @@ import {SVG_NS, KEYS} from '../settings';
 import board from './Board';
 import paddle from './Paddle';
 import ball from './Ball';
+import score from './Score';
 export default class Game {
 
 	constructor(element, width, height, spaceBar) {
@@ -18,6 +19,8 @@ export default class Game {
 		this.Player1 = new paddle (this.height, this.paddleWidth, this.paddleHeight, this.boardGap, (this.height-this.paddleHeight)/2, KEYS.a, KEYS.z, KEYS.spaceBar)
 		this.Player2 = new paddle (this.height, this.paddleWidth, this.paddleHeight, (this.width-this.boardGap-this.paddleWidth), (this.height-this.paddleHeight)/2, KEYS.up, KEYS.down, KEYS.spaceBar)
 		this.ball = new ball (this.radius, this.width, this.height);
+		this.Point1 = new score (this.width / 2 - 45, 30);
+		this.Point2 = new score (this.width / 2 + 30, 30);
 
 		document.addEventListener('keydown', event => {
       switch (event.key) {
@@ -45,5 +48,7 @@ export default class Game {
 			this.Player1.render(svg);
 			this.Player2.render(svg);
 			this.ball.render(svg, this.Player1, this.Player2);
+			this.Point1.render(svg, this.Player1.score);
+			this.Point2.render(svg, this.Player2.score);
 	}
 }
