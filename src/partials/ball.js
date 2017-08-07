@@ -7,7 +7,8 @@ export default class ball{
     this.boardHeight = boardHeight;
     this.direction = 1;
     this.sound = new Audio('public/sounds/pong-01.wav');
-    this.win = new Audio('')
+    this.win = new Audio('public/sounds/fart.wav');
+    this.bounce = new Audio('public/sounds/pong-03.wav');
     this.reset();
   }
 
@@ -26,10 +27,14 @@ export default class ball{
 
     } else if (hitTop || hitBot){
       this.vy = -this.vy;
+      this.bounce.play();
     }
   }
 
   paddleCollision(Player1, Player2){
+    for (i = 0; i < cars.length; i++
+
+    )
     if(this.vx > 0){
       let paddle = Player2.coordinates(Player2.x, Player2.y, Player2.width, Player2.height);
       let [leftX, rightX, topY, bottomY] = paddle;
@@ -45,11 +50,13 @@ export default class ball{
         this.sound.play();
       }
     }
+    // increment
   }
 
   goal(Player){
     Player.score++;
     this.reset();
+    this.win.play();
   }
 
   render(svg, Player1, Player2) {
@@ -58,10 +65,6 @@ export default class ball{
 
     this.wallCollision(Player1, Player2);
     this.paddleCollision(Player1, Player2);
-
-    //goal(), if right wall add p1 score + else left wall add p2 score
-    //change direction of reset when score
-  
     
     let ball = document.createElementNS(SVG_NS, 'circle');
     ball.setAttributeNS(null, 'r', this.r);
