@@ -1,4 +1,4 @@
-import {SVG_NS} from '../settings'
+import {SVG_NS, KEYS} from '../settings'
 export default class ball{
 
   constructor(r, boardWidth, boardHeight) {
@@ -10,10 +10,23 @@ export default class ball{
     this.win = new Audio('public/sounds/fart.wav');
     this.bounce = new Audio('public/sounds/pong-03.wav');
     this.reset();
+
+    document.addEventListener('keydown', event => {
+      switch (event.key) {
+        case KEYS.one:
+          this.direction = 1
+          break;
+
+        case KEYS.two:
+          this.direction = 2
+          break;
+      }
+    })
   }
 
+
   wallCollision(Player1, Player2){
-    const hitLeft = this.x - this.r <= 0                            //redundant remove later after paddle collision
+    const hitLeft = this.x - this.r <= 0                         
     const hitRight = this.x + this.r >= this.boardWidth
     const hitTop = this.y - this.r <= 0
     const hitBot = this.y + this.r >= this.boardHeight
@@ -32,9 +45,6 @@ export default class ball{
   }
 
   paddleCollision(Player1, Player2){
-    for (i = 0; i < cars.length; i++
-
-    )
     if(this.vx > 0){
       let paddle = Player2.coordinates(Player2.x, Player2.y, Player2.width, Player2.height);
       let [leftX, rightX, topY, bottomY] = paddle;
@@ -50,13 +60,14 @@ export default class ball{
         this.sound.play();
       }
     }
-    // increment
   }
 
-  goal(Player){
+goal(Player, Player1, Player2){
     Player.score++;
     this.reset();
     this.win.play();
+    Player.height += 5
+    Player.speed += 1
   }
 
   render(svg, Player1, Player2) {
