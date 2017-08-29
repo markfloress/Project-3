@@ -1,11 +1,11 @@
 import {SVG_NS, KEYS} from '../settings';
-import board from './Board';
-import paddle from './Paddle';
-import ball from './Ball';
-import score from './Score';
+import Board from './Board';
+import Paddle from './Paddle';
+import Ball from './Ball';
+import Score from './Score';
 export default class Game {
 
-	constructor(element, width, height, spaceBar) {
+	constructor(element, width, height) {
 		this.width = width;
 		this.height = height;
 		this.gameElement = document.getElementById(element);

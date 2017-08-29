@@ -1,5 +1,5 @@
 import {SVG_NS} from '../settings'
-export default class paddle{
+export default class Paddle{
 
   constructor(boardHeight, width, height, x, y, up, down, spaceBar){
     this.boardHeight = boardHeight;

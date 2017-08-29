@@ -1,5 +1,5 @@
 import {SVG_NS} from '../settings'
-export default class score{
+export default class Score{
 
   constructor(x, y, size, fill){
     this.x = x;
