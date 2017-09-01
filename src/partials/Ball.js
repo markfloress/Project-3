@@ -1,5 +1,5 @@
 import {SVG_NS, KEYS} from '../settings'
-export default class ball{
+export default class Ball{
 
   constructor(r, boardWidth, boardHeight) {
     this.r = r;
@@ -62,7 +62,7 @@ export default class ball{
     }
   }
 
-goal(Player, Player1, Player2){
+goal(Player){
     Player.score++;
     this.reset();
     this.win.play();
