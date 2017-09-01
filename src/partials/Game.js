@@ -9,18 +9,18 @@ export default class Game {
 		this.width = width;
 		this.height = height;
 		this.gameElement = document.getElementById(element);
-		this.board = new board(this.width, this.height);
+		this.board = new Board(this.width, this.height);
 
 	this.paddleWidth = 8;
 	this.paddleHeight = 56;
 	this.boardGap = 10;
 	this.radius = 8;
 		
-		this.Player1 = new paddle (this.height, this.paddleWidth, this.paddleHeight, this.boardGap, (this.height-this.paddleHeight)/2, KEYS.a, KEYS.z, KEYS.spaceBar)
-		this.Player2 = new paddle (this.height, this.paddleWidth, this.paddleHeight, (this.width-this.boardGap-this.paddleWidth), (this.height-this.paddleHeight)/2, KEYS.up, KEYS.down, KEYS.spaceBar)
-		this.ball = new ball (this.radius, this.width, this.height);
-		this.Point1 = new score (this.width / 2 - 45, 30);
-		this.Point2 = new score (this.width / 2 + 30, 30);
+		this.Player1 = new Paddle (this.height, this.paddleWidth, this.paddleHeight, this.boardGap, (this.height-this.paddleHeight)/2, KEYS.a, KEYS.z, KEYS.spaceBar)
+		this.Player2 = new Paddle (this.height, this.paddleWidth, this.paddleHeight, (this.width-this.boardGap-this.paddleWidth), (this.height-this.paddleHeight)/2, KEYS.up, KEYS.down, KEYS.spaceBar)
+		this.ball = new Ball (this.radius, this.width, this.height);
+		this.Point1 = new Score (this.width / 2 - 45, 30);
+		this.Point2 = new Score (this.width / 2 + 30, 30);
 
 		document.addEventListener('keydown', event => {
       switch (event.key) {
@@ -47,16 +47,19 @@ export default class Game {
 			this.board.render(svg);
 			this.Player1.render(svg);
 			this.Player2.render(svg);
-			this.ball.render(svg, this.Player1, this.Player2);
 			this.Point1.render(svg, this.Player1.score);
 			this.Point2.render(svg, this.Player2.score);
 
-				if (this.Player1.score > 30){
-      alert('LEFT PLAYER WON THE GAME');
-      location.reload();
-		} else if (this.Player2.score > 30){
+				if (this.Player1.score >= 5){
+			alert('LEFT PLAYER WON THE GAME');
+			location.reload(); 
+			return;
+		} else if (this.Player2.score >= 5){
 			alert('RIGHT PLAYER WON THE GAME');
-      location.reload();
+			location.reload(); 
+			return;
+		} else {
+			this.ball.render(svg, this.Player1, this.Player2);
 		}
 	}
 }

@@ -46,15 +46,15 @@ export default class Ball{
 
   paddleCollision(Player1, Player2){
     if(this.vx > 0){
-      let paddle = Player2.coordinates(Player2.x, Player2.width, Player2.height);
-      let [leftX, topY, bottomY] = paddle;
+      let paddle = Player2.coordinates(Player2.x, Player2.y, Player2.width, Player2.height);
+      let [leftX, rightX, topY, bottomY] = paddle;
       if(this.x + this.r >= leftX  &&  this.y >= topY  &&  this.y <= bottomY){
         this.vx = -this.vx;
         this.sound.play();
        }
     }else {
-      let paddle = Player1.coordinates(Player1.y, Player1.width, Player1.height);
-      let [rightX, topY, bottomY] = paddle;
+      let paddle = Player1.coordinates(Player1.x, Player1.y, Player1.width, Player1.height);
+      let [leftX, rightX, topY, bottomY] = paddle;
       if(this.x - this.r <= rightX  &&  this.y >= topY  &&  this.y <= bottomY){
         this.vx = -this.vx;
         this.sound.play();

@@ -178,16 +178,19 @@ var Game = function () {
 			this.board.render(svg);
 			this.Player1.render(svg);
 			this.Player2.render(svg);
-			this.ball.render(svg, this.Player1, this.Player2);
 			this.Point1.render(svg, this.Player1.score);
 			this.Point2.render(svg, this.Player2.score);
 
-			if (this.Player1.score > 30) {
+			if (this.Player1.score >= 5) {
 				alert('LEFT PLAYER WON THE GAME');
 				location.reload();
-			} else if (this.Player2.score > 30) {
+				return;
+			} else if (this.Player2.score >= 5) {
 				alert('RIGHT PLAYER WON THE GAME');
 				location.reload();
+				return;
+			} else {
+				this.ball.render(svg, this.Player1, this.Player2);
 			}
 		}
 	}]);
@@ -265,11 +268,11 @@ var _settings = __webpack_require__(0);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var ball = function () {
-  function ball(r, boardWidth, boardHeight) {
+var Ball = function () {
+  function Ball(r, boardWidth, boardHeight) {
     var _this = this;
 
-    _classCallCheck(this, ball);
+    _classCallCheck(this, Ball);
 
     this.r = r;
     this.boardWidth = boardWidth;
@@ -293,7 +296,7 @@ var ball = function () {
     });
   }
 
-  _createClass(ball, [{
+  _createClass(Ball, [{
     key: 'wallCollision',
     value: function wallCollision(Player1, Player2) {
       var hitLeft = this.x - this.r <= 0;
@@ -315,26 +318,28 @@ var ball = function () {
     key: 'paddleCollision',
     value: function paddleCollision(Player1, Player2) {
       if (this.vx > 0) {
-        var paddle = Player2.coordinates(Player2.x, Player2.width, Player2.height);
+        var paddle = Player2.coordinates(Player2.x, Player2.y, Player2.width, Player2.height);
 
-        var _paddle = _slicedToArray(paddle, 3),
+        var _paddle = _slicedToArray(paddle, 4),
             leftX = _paddle[0],
-            topY = _paddle[1],
-            bottomY = _paddle[2];
+            rightX = _paddle[1],
+            topY = _paddle[2],
+            bottomY = _paddle[3];
 
         if (this.x + this.r >= leftX && this.y >= topY && this.y <= bottomY) {
           this.vx = -this.vx;
           this.sound.play();
         }
       } else {
-        var _paddle2 = Player1.coordinates(Player1.y, Player1.width, Player1.height);
+        var _paddle2 = Player1.coordinates(Player1.x, Player1.y, Player1.width, Player1.height);
 
-        var _paddle3 = _slicedToArray(_paddle2, 3),
-            rightX = _paddle3[0],
-            _topY = _paddle3[1],
-            _bottomY = _paddle3[2];
+        var _paddle3 = _slicedToArray(_paddle2, 4),
+            _leftX = _paddle3[0],
+            _rightX = _paddle3[1],
+            _topY = _paddle3[2],
+            _bottomY = _paddle3[3];
 
-        if (this.x - this.r <= rightX && this.y >= _topY && this.y <= _bottomY) {
+        if (this.x - this.r <= _rightX && this.y >= _topY && this.y <= _bottomY) {
           this.vx = -this.vx;
           this.sound.play();
         }
@@ -379,10 +384,10 @@ var ball = function () {
     }
   }]);
 
-  return ball;
+  return Ball;
 }();
 
-exports.default = ball;
+exports.default = Ball;
 
 /***/ }),
 /* 6 */
@@ -401,15 +406,15 @@ var _settings = __webpack_require__(0);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var board = function () {
-  function board(width, height) {
-    _classCallCheck(this, board);
+var Board = function () {
+  function Board(width, height) {
+    _classCallCheck(this, Board);
 
     this.width = width;
     this.height = height;
   }
 
-  _createClass(board, [{
+  _createClass(Board, [{
     key: 'render',
     value: function render(svg) {
       var rect = document.createElementNS(_settings.SVG_NS, 'rect');
@@ -431,10 +436,10 @@ var board = function () {
     }
   }]);
 
-  return board;
+  return Board;
 }();
 
-exports.default = board;
+exports.default = Board;
 
 /***/ }),
 /* 7 */
@@ -453,11 +458,11 @@ var _settings = __webpack_require__(0);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var paddle = function () {
-  function paddle(boardHeight, width, height, x, y, up, down, spaceBar) {
+var Paddle = function () {
+  function Paddle(boardHeight, width, height, x, y, up, down, spaceBar) {
     var _this = this;
 
-    _classCallCheck(this, paddle);
+    _classCallCheck(this, Paddle);
 
     this.boardHeight = boardHeight;
     this.width = width;
@@ -484,7 +489,7 @@ var paddle = function () {
     });
   }
 
-  _createClass(paddle, [{
+  _createClass(Paddle, [{
     key: 'coordinates',
     value: function coordinates(x, y, width, height) {
       var leftX = x;
@@ -522,10 +527,10 @@ var paddle = function () {
     }
   }]);
 
-  return paddle;
+  return Paddle;
 }();
 
-exports.default = paddle;
+exports.default = Paddle;
 
 /***/ }),
 /* 8 */
@@ -544,9 +549,9 @@ var _settings = __webpack_require__(0);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var score = function () {
-  function score(x, y, size, fill) {
-    _classCallCheck(this, score);
+var Score = function () {
+  function Score(x, y, size, fill) {
+    _classCallCheck(this, Score);
 
     this.x = x;
     this.y = y;
@@ -554,7 +559,7 @@ var score = function () {
     this.fill = fill;
   }
 
-  _createClass(score, [{
+  _createClass(Score, [{
     key: 'render',
     value: function render(svg, score) {
       var point = document.createElementNS(_settings.SVG_NS, 'text');
@@ -567,10 +572,10 @@ var score = function () {
     }
   }]);
 
-  return score;
+  return Score;
 }();
 
-exports.default = score;
+exports.default = Score;
 
 /***/ }),
 /* 9 */
