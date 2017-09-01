@@ -50,11 +50,11 @@ export default class Game {
 			this.Point1.render(svg, this.Player1.score);
 			this.Point2.render(svg, this.Player2.score);
 
-				if (this.Player1.score >= 5){
+				if (this.Player1.score >= 15){
 			alert('LEFT PLAYER WON THE GAME');
 			location.reload(); 
 			return;
-		} else if (this.Player2.score >= 5){
+		} else if (this.Player2.score >= 15){
 			alert('RIGHT PLAYER WON THE GAME');
 			location.reload(); 
 			return;
