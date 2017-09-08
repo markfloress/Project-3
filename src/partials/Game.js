@@ -11,10 +11,10 @@ export default class Game {
 		this.gameElement = document.getElementById(element);
 		this.board = new Board(this.width, this.height);
 
-	this.paddleWidth = 8;
-	this.paddleHeight = 56;
-	this.boardGap = 10;
-	this.radius = 8;
+		this.paddleWidth = 8;
+		this.paddleHeight = 56;
+		this.boardGap = 10;
+		this.radius = 8;
 		
 		this.Player1 = new Paddle (this.height, this.paddleWidth, this.paddleHeight, this.boardGap, (this.height-this.paddleHeight)/2, KEYS.a, KEYS.z, KEYS.spaceBar)
 		this.Player2 = new Paddle (this.height, this.paddleWidth, this.paddleHeight, (this.width-this.boardGap-this.paddleWidth), (this.height-this.paddleHeight)/2, KEYS.up, KEYS.down, KEYS.spaceBar)
